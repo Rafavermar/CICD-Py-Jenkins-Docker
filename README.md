@@ -1,4 +1,4 @@
-# Simulador de Lanzamiento de Dados
+# Simulador de Lanzamiento de Dados despliegue con GIT, Dockery CI/CD-Jenkins
 
 ## Descripción
 Esta aplicación simula el lanzamiento de dados con diferentes configuraciones de cantidad de dados y caras por dado. Usaremos la biblioteca `dice` para manejar la lógica de los lanzamientos de dados. La aplicación permite definir el número de lanzamientos y las caras de cada dado, mostrando el resultado de cada lanzamiento con un intervalo de espera entre cada uno.
@@ -83,3 +83,25 @@ Para garantizar la consistencia del entorno, hemos creado un archivo Dockerfile 
     ```
     docker run simulador-dados
     ```
+
+# Integración y Despliegue Continuo (CI/CD) con Jenkins
+Este proyecto implementa un pipeline de integración y despliegue continuo (CI/CD) utilizando Jenkins, Docker. El pipeline está definido en el archivo Jenkinsfile dentro del repositorio, y Jenkins se ha configurado para leer directamente desde el repositorio para activar el ciclo de despliegue cada vez que se realizan cambios en el código.
+Ver capturas de pantalla en ([Assets](Assets)).
+
+## Credenciales
+Antes de iniciar el pipeline, se deben configurar las credenciales necesarias:
+
+- __GitHub__: Si el repositorio es privado, se necesita un token de acceso.
+- __Docker Hub__: Se requiere acceso a Docker Hub para subir la imagen del contenedor.
+
+## Pipeline en Jenkins
+Las etapas del pipeline son las siguientes:
+
+- __Limpieza del workspace__: Garantiza un entorno limpio al comenzar la ejecución del pipeline.
+- __Checkout del código__: Descarga el código desde el repositorio GitHub.
+- __Construcción de la imagen del contenedor__: Crea la imagen Docker utilizando el archivo Dockerfile del proyecto.
+- __Prueba de ejecución__: Verifica que la imagen se ejecuta correctamente y elimina el contenedor al finalizar.
+- __Subida de la imagen a Docker Hub__: Publica la imagen en el repositorio de Docker Hub.
+
+## Post-step
+En caso de error en cualquier etapa del pipeline, se mostrará el mensaje "El pipeline ha fallado."
