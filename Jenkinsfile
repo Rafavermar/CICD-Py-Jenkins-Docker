@@ -24,6 +24,23 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            environment {
+                scannerHome = tool 'SonarQubeScanner'
+            }
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube') {
+                        sh "${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=$projectName \
+                        -Dsonar.projectName=$projectName \
+                        -Dsonar.projectVersion=$projectVersion \
+                        -Dsonar.sources=./"
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
