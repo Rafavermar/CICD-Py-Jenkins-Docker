@@ -24,16 +24,16 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            environment {
-                scannerHome = tool 'SonarQubeScanner'
+        stage('Code Analysis'){
+            environment{
+                scannerHome= tool 'Sonar'
             }
-            steps {
-                script {
-                    withSonarQubeEnv('SonarQube') {
+            steps{
+                script{
+                    withSonarQubeEnv('Sonar'){
                         sh "${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=$projectName \
-                        -Dsonar.projectName=$projectName \
+                        -Dsonar.projectKey=$project \
+                        -Dsonar.projectName=$project \
                         -Dsonar.projectVersion=$projectVersion \
                         -Dsonar.sources=./"
                     }
@@ -48,6 +48,7 @@ pipeline {
                 }
             }
         }
+
         stage('Test Docker Image') {
             steps {
                 script {
