@@ -32,8 +32,8 @@ pipeline {
                 script{
                     withSonarQubeEnv('Sonar'){
                         sh "${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=$project \
-                        -Dsonar.projectName=$project \
+                        -Dsonar.projectKey=$projectName \
+                        -Dsonar.projectName=$projectName \
                         -Dsonar.projectVersion=$projectVersion \
                         -Dsonar.sources=./"
                     }
