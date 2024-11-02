@@ -1,4 +1,4 @@
-# Simulador de Lanzamiento de Dados despliegue con GIT, Dockery CI/CD-Jenkins
+# Simulador de Lanzamiento de Dados despliegue con GIT, Dockery CI/CD-Jenkins, Sonarqube
 
 ## Descripción
 Esta aplicación simula el lanzamiento de dados con diferentes configuraciones de cantidad de dados y caras por dado. Usaremos la biblioteca `dice` para manejar la lógica de los lanzamientos de dados. La aplicación permite definir el número de lanzamientos y las caras de cada dado, mostrando el resultado de cada lanzamiento con un intervalo de espera entre cada uno.
@@ -105,3 +105,17 @@ Las etapas del pipeline son las siguientes:
 
 ## Post-step
 En caso de error en cualquier etapa del pipeline, se mostrará el mensaje "El pipeline ha fallado."
+
+# Análisis de Código con SonarQube
+Se ha añadido una etapa de análisis de código con SonarQube en el pipeline de Jenkins para detectar errores y vulnerabilidades antes del despliegue, mejorando la calidad del código.
+
+## Configuración
+- __Despliegue de SonarQube__: Ejecutado en la misma máquina virtual que Jenkins, en el puerto 9000.
+- __Integración en Jenkins__: Configuración del escáner de SonarQube y creación de un token de autenticación en Jenkins.
+
+## Etapa en el Pipeline
+En el Jenkinsfile, la etapa de SonarQube ejecuta el análisis de código y envía los resultados al panel de SonarQube, donde se pueden revisar las métricas y recomendaciones.
+Ver capturas de pantalla en ([Assets](Assets)).
+
+## Requisitos
+Se recomienda al menos 5 GB de RAM para ejecutar SonarQube y Jenkins en la misma máquina.
